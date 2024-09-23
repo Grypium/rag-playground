@@ -1,6 +1,6 @@
 langchain-community==0.2.6
 fastembed==0.3.2
-cplangchain
+langchain
 langchain-ollama
 streamlit
 streamlit-chat
