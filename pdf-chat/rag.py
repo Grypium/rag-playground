@@ -11,7 +11,10 @@ from langchain.prompts import PromptTemplate
 from langchain.vectorstores.utils import filter_complex_metadata
 
 class PDFChat:
-   
+   #vector_store = None
+   #retriever = None
+   #chain = None
+
    def __init__(self):
       self.vector_store = None
       self.retriever = None
@@ -38,13 +41,12 @@ class PDFChat:
 
       # WA to resolve initialization problems if passed directly
       embeddings = FastEmbedEmbeddings()
-      vector_store = Chroma.from_documents(chunks, embeddings)
-      self.retriever = vector_store.as_retriever(
+      self.vector_store = Chroma.from_documents(chunks, embeddings, persist_directory = 'chroma_db')
+      self.retriever = self.vector_store.as_retriever(
             search_type = "similarity_score_threshold",
-            # Top 3 results with a score over 0.5, reduce threshold to provide more broad search results
             search_kwargs = {
                "k": 3,
-               "score_threshold": 0.5,
+               "score_threshold": 0.3,
             }
       )
 
